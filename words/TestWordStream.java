@@ -147,11 +147,6 @@ public class TestWordStream {
 
     }
 
-
-
-
-
-
     //5. Write a method boolean isPalindrome(String s)
     private static boolean isPalindrome(String str){
         if (str == null) {
@@ -163,7 +158,6 @@ public class TestWordStream {
 
         return str.equals(reversed);
     }
-
 
     //9.1 Write a method Map<Character,Integer> letters(String s) that returns a tree map
     //indicate ing how many times each letter is used in the word s.
