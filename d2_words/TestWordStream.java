@@ -162,7 +162,7 @@ public class TestWordStream {
                 .mapToObj(e -> (char) e)
                 .collect(Collectors.groupingBy(Function.identity(), TreeMap::new, Collectors.summingInt(e -> 1)));
     }
-    
+
     private static Stream<String> readWords(Path path) {
         try {
             return Files.lines(path);
