@@ -1,6 +1,5 @@
-import java.io.BufferedReader;
-import java.io.FileReader;
 import java.io.IOException;
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.stream.Stream;
 
@@ -11,8 +10,8 @@ public class WordsHandler {
             throw new IllegalArgumentException("handler can't be null");
         }
 
-        try (BufferedReader reader = new BufferedReader(new FileReader(path.toFile()))) {
-            handler.handle(reader.lines());
+        try {
+            handler.handle(Files.lines(path));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
