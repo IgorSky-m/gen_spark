@@ -1,3 +1,5 @@
+package week_2.day_2.words;
+
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -10,7 +12,7 @@ import java.util.stream.Stream;
 
 public class TestWordStream {
 
-    private static final String PATH = "words";
+    private static final String PATH = "week_2/day_2/words/words";
 
     public static void main(String[] args){
 
