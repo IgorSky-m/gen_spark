@@ -15,7 +15,7 @@ import org.springframework.context.annotation.Scope;
 import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 
-@ComponentScan("org.genspark.source")
+@ComponentScan("edu.genspark.source")
 @Configuration
 public class ApplicationConfiguration {
 
