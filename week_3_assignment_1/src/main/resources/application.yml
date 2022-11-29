@@ -1,0 +1,10 @@
+# for example ork with yml
+edu:
+  genspark:
+    examples:
+      annotation:
+        entity:
+          student:
+            name: 'Annotation Student'
+          phone:
+            mob: '(543)111-2222'
