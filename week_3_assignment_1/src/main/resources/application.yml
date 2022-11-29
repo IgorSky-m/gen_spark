@@ -8,3 +8,5 @@ edu:
             name: 'Annotation Student'
           phone:
             mob: '(543)111-2222'
+      spel:
+        word: 'SPEL WORD'
