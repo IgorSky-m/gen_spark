@@ -22,8 +22,25 @@ public class SpEL {
     @Value("#{spEL.random()}")
     private int random;
 
+    @Value("#{spEL.z < spEL.random}")
+    private boolean less;
+
+    @Value("#{spEL.less ? 'LESS' : 'GREATER'}")
+    private String ternaryOp;
+
+
+    @Value("#{T(java.util.concurrent.ThreadLocalRandom).current().nextInt()}")
+    private int nextRandomWithStaticMethod;
+
+
     @Value("${edu.genspark.examples.spel.word}")
     private String word;
+
+    @Value("#{new edu.genspark.examples.spel.TestObject()}")
+    private TestObject testObject;
+
+    @Value("#{new edu.genspark.examples.spel.TestObject('Hello', 2)}")
+    private TestObject testObjectWithParam;
 
     public int random(){
         return ThreadLocalRandom.current().nextInt();
