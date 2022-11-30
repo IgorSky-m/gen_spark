@@ -1,4 +1,4 @@
-package edu.genspark.aop.annotations;
+package edu.genspark.examples.aop.annotations;
 
 import org.springframework.context.support.AbstractApplicationContext;
 

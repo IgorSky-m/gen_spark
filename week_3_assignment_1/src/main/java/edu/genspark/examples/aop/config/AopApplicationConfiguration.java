@@ -1,4 +1,4 @@
-package edu.genspark.aop.config;
+package edu.genspark.examples.aop.config;
 
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;

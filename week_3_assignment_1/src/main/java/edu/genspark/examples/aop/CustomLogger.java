@@ -1,4 +1,4 @@
-package edu.genspark.aop;
+package edu.genspark.examples.aop;
 
 import org.aspectj.lang.annotation.After;
 import org.aspectj.lang.annotation.Aspect;

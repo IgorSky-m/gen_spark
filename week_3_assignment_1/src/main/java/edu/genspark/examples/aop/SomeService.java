@@ -1,8 +1,8 @@
-package edu.genspark.aop;
+package edu.genspark.examples.aop;
 
-import edu.genspark.aop.annotations.AopCustomLog;
-import edu.genspark.aop.annotations.ValueCheck;
-import edu.genspark.aop.api.IService;
+import edu.genspark.examples.aop.annotations.AopCustomLog;
+import edu.genspark.examples.aop.annotations.ValueCheck;
+import edu.genspark.examples.aop.api.IService;
 import org.springframework.stereotype.Service;
 
 @Service("service")

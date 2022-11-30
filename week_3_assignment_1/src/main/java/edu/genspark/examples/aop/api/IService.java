@@ -1,4 +1,4 @@
-package edu.genspark.aop.api;
+package edu.genspark.examples.aop.api;
 
 public interface IService {
     void doWork();

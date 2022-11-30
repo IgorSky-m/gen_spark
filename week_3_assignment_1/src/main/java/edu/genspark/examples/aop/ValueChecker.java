@@ -1,6 +1,6 @@
-package edu.genspark.aop;
+package edu.genspark.examples.aop;
 
-import edu.genspark.aop.annotations.ValueCheck;
+import edu.genspark.examples.aop.annotations.ValueCheck;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
 import org.springframework.stereotype.Component;

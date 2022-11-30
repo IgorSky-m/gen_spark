@@ -1,7 +1,7 @@
-package edu.genspark.aop;
+package edu.genspark.examples.aop;
 
-import edu.genspark.aop.api.IService;
-import edu.genspark.aop.config.AopApplicationConfiguration;
+import edu.genspark.examples.aop.api.IService;
+import edu.genspark.examples.aop.config.AopApplicationConfiguration;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
