@@ -9,12 +9,12 @@ import org.springframework.stereotype.Component;
 @Component
 public class CustomLogger {
 
-    @Before("@annotation(edu.genspark.aop.annotations.AopCustomLog)")
+    @Before("@annotation(edu.genspark.examples.aop.annotations.AopCustomLog)")
     public void startLog(){
         System.out.println("---------------------start log---------------------");
     }
 
-    @After("@annotation(edu.genspark.aop.annotations.AopCustomLog)")
+    @After("@annotation(edu.genspark.examples.aop.annotations.AopCustomLog)")
     public void endLog(){
         System.out.println("---------------------end log---------------------");
     }

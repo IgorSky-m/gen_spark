@@ -13,7 +13,6 @@ public class AopMain {
                         .printContainerBeanNames();
 
         IService bean = processor.getBean("service");
-
         bean.doWork();
         bean.doWorkWithValue("dsa");
 
