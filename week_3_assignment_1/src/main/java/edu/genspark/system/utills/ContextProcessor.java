@@ -35,6 +35,11 @@ public class ContextProcessor implements IContextProcessor {
     }
 
     @Override
+    public <T> T getBean(String id) {
+        return (T) context.getBean(id);
+    }
+
+    @Override
     public void closeContext() {
         context.close();
     }
