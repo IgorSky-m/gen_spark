@@ -15,6 +15,7 @@ public class AopMain {
         IService bean = processor.getBean("service");
         bean.doWork();
         bean.doWorkWithValue("dsa");
+        bean.doWorkWithValue("Hello AOP");
 
         processor.closeContext();
     }
