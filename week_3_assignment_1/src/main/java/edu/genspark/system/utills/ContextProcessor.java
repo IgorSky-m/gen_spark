@@ -21,7 +21,7 @@ public class ContextProcessor implements IContextProcessor {
     }
 
     @Override
-    public IContextProcessor printContextInfo(Class<? extends BaseStudent> studentClass, String...identifiers) {
+    public IContextProcessor printContextInfo(Class<? extends IStudent> studentClass, String...identifiers) {
         System.out.println("----------------------------STUDENT INFO--------------------------------------------");
         if (identifiers.length > 0){
             Arrays.stream(identifiers).forEach(id -> printInfo(studentClass, id));
@@ -45,7 +45,7 @@ public class ContextProcessor implements IContextProcessor {
     }
 
 
-    private void printInfo(Class<? extends BaseStudent> studentClass, String identifier){
+    private void printInfo(Class<? extends IStudent> studentClass, String identifier){
         IStudent student = context.getBean(identifier, studentClass);
         System.out.println(student);
     }

@@ -1,10 +1,13 @@
 package edu.genspark.examples.aop;
 
+import edu.genspark.entity.api.IAddress;
 import edu.genspark.examples.aop.api.IService;
 import edu.genspark.examples.aop.config.AopApplicationConfiguration;
 import edu.genspark.system.utills.ContextProcessor;
 import edu.genspark.system.utills.api.IContextProcessor;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+
+import java.util.Objects;
 
 public class AopMain {
     public static void main(String[] args) {
