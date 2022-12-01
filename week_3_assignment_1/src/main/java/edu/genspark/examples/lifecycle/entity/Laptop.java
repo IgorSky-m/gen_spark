@@ -46,12 +46,12 @@ public class Laptop implements IDevice, ITrackable , BeanNameAware {
 
 
     @PostConstruct
-    public void postConstruct(){
+    private void postConstruct(){
         System.out.println("in Laptop device Post Construct");
     }
 
     @PreDestroy
-    public void preDestroy(){
+    private void preDestroy(){
         System.out.println("in Laptop device Pre Destroy");
     }
 

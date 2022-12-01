@@ -22,9 +22,10 @@
 
     <bean id="PhoneXmlSecondary" class="edu.genspark.examples.xml.entity.XmlPhone">
         <property name="mob" value="(321)987-6543"/>
+
     </bean>
 
-    <bean id="StudentXml" class="edu.genspark.examples.xml.entity.XmlStudent" init-method="startUp" destroy-method="shutDown">
+    <bean id="StudentXml" scope="prototype" class="edu.genspark.examples.xml.entity.XmlStudent" init-method="startUp" destroy-method="shutDown">
         <property name="id" value="1"/>
         <property name="name" value="${edu.xml.name}"/>
         <property name="add" ref="AddressXml"/>
