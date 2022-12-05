@@ -6,6 +6,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import edu.genspark.week_4_assignment_1.api.IIdentifiable;
 import edu.genspark.week_4_assignment_1.essences.phone.dto.UserPhone;
 import jakarta.persistence.*;
+import lombok.Builder;
 import lombok.Data;
 
 import java.util.List;

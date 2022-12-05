@@ -1,7 +1,6 @@
 package edu.genspark.week_4_assignment_1.essences.user.service;
 
 import edu.genspark.week_4_assignment_1.api.AbstractBaseCRUDService;
-import edu.genspark.week_4_assignment_1.essences.phone.dto.UserPhone;
 import edu.genspark.week_4_assignment_1.essences.phone.repository.api.IUserPhoneRepository;
 import edu.genspark.week_4_assignment_1.essences.user.dto.AppUser;
 import edu.genspark.week_4_assignment_1.essences.user.repository.api.IAppUserRepository;
@@ -11,7 +10,6 @@ import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -19,7 +17,7 @@ public class AppUserService extends AbstractBaseCRUDService<AppUser, UUID> {
 
     private static final Logger logger = LoggerFactory.getLogger(AppUserService.class);
 
-    private IUserPhoneRepository userPhoneRepository;
+    private final IUserPhoneRepository userPhoneRepository;
 
     public AppUserService(IAppUserRepository repository, IUserPhoneRepository userPhoneRepository, MessageSource messageSource) {
         super(repository, messageSource);
@@ -37,12 +35,10 @@ public class AppUserService extends AbstractBaseCRUDService<AppUser, UUID> {
     }
 
 
-    @Transactional(readOnly = true)
+    @Transactional
     @Override
-    public AppUser getOneById(UUID uuid) {
-        List<UserPhone> all = userPhoneRepository.findAll();
-        AppUser oneById = super.getOneById(uuid);
-        return oneById;
+    public void deleteAll() {
+        getRepository().deleteAll();
     }
 
     @Override

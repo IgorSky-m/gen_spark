@@ -12,4 +12,6 @@ public interface ICUDService<T, ID> {
 
     T deleteById(ID id);
     List<T> deleteAllById(Collection<ID> ids);
+
+    void deleteAll();
 }
