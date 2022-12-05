@@ -1,0 +1,16 @@
+spring:
+  datasource:
+    url: 'jdbc:h2:mem:week_4_db'
+    driverClassName: 'org.h2.Driver'
+    username: 'week_4_user'
+    password: 'week_4_pass'
+  jpa:
+    database-platform: 'org.hibernate.dialect.H2Dialect'
+    show_sql: true
+  h2:
+    console:
+      enabled: true
+server:
+  port: 9000
+
+
