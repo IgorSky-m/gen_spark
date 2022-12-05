@@ -22,13 +22,14 @@ import static org.junit.jupiter.api.Assertions.*;
 @Transactional
 class Week4Assignment1ApplicationTests {
 
-
 	@Autowired
 	private ICRUDService<AppUser, UUID> service;
+	private final AppUser INITIAL_TABLE_USER = getInitialStaticUser();
+
 
 	@BeforeEach
 	public void addData(){
-		service.save(getInitialStaticUser());
+		service.save(INITIAL_TABLE_USER);
 	}
 
 	@AfterEach
@@ -60,30 +61,29 @@ class Week4Assignment1ApplicationTests {
 
 	@Test
 	void findById(){
-		UUID id = UUID.fromString("15ba41d2-706c-4a47-b3ed-4c45b932067f");
 
-		Optional<AppUser> oneById = service.findOneById(id);
+
+		Optional<AppUser> oneById = service.findOneById(INITIAL_TABLE_USER.getId());
 
 		assertTrue(oneById.isPresent());
 
 		AppUser user = oneById.get();
 
-		assertEquals(id, user.getId());
-		assertEquals("InitialName", user.getName());
+		assertEquals(INITIAL_TABLE_USER.getId(), user.getId());
+		assertEquals(INITIAL_TABLE_USER.getName(), user.getName());
 	}
 
 
 	@Test
 	void testUpdate(){
 
-		AppUser initialStaticUser = getInitialStaticUser();
-		Optional<AppUser> oneById = service.findOneById(initialStaticUser.getId());
+		Optional<AppUser> oneById = service.findOneById(INITIAL_TABLE_USER.getId());
 
 		assertTrue(oneById.isPresent());
 
 		AppUser user = oneById.get();
 
-		assertEquals(initialStaticUser.getLogin(), user.getLogin());
+		assertEquals(INITIAL_TABLE_USER.getLogin(), user.getLogin());
 
 		String updatedLogin = "NewLogin";
 
@@ -93,10 +93,10 @@ class Week4Assignment1ApplicationTests {
 
 		AppUser updated = service.getOneById(user.getId());
 
-		assertNotEquals(updated.getLogin(), initialStaticUser.getLogin());
+		assertNotEquals(updated.getLogin(), INITIAL_TABLE_USER.getLogin());
 		assertEquals(updatedLogin, updated.getLogin());
 
-		assertEquals(initialStaticUser.getId(), updated.getId());
+		assertEquals(INITIAL_TABLE_USER.getId(), updated.getId());
 	}
 
 	@Test
@@ -105,7 +105,7 @@ class Week4Assignment1ApplicationTests {
 
 		assertEquals(1, all.size());
 
-		AppUser oneById = service.getOneById(UUID.fromString("15ba41d2-706c-4a47-b3ed-4c45b932067f"));
+		AppUser oneById = service.getOneById(INITIAL_TABLE_USER.getId());
 
 		assertNotNull(oneById);
 
