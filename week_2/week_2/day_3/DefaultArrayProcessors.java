@@ -11,9 +11,15 @@ public class DefaultArrayProcessors {
     public static final ArrayProcessor SUM = arr -> Arrays.stream(arr).sum();
     public static final ArrayProcessor AVG = arr -> Arrays.stream(arr).summaryStatistics().getAverage();
 
+    /**
+     * This function should return an ArrayProcessor that counts the number of times that
+     * value occurs in an array. The return value should be given as a lambda expression.
+     * @param value value occurs in array
+     * @return counts the number of times that value occurs
+     */
     public static ArrayProcessor counter(double value) {
         return arr -> Arrays.stream(arr)
                 .filter(e ->  Math.abs(e - value) <= DEFAULT_PRECISION)
-                .sum();
+                .count();
     }
 }
