@@ -1,12 +1,13 @@
 package edu.genspark.week_4_assignment_1.essences.user.dto;
 
-import com.fasterxml.jackson.annotation.JsonIdentityReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import edu.genspark.week_4_assignment_1.api.IIdentifiable;
 import edu.genspark.week_4_assignment_1.essences.phone.dto.UserPhone;
-import jakarta.persistence.*;
-import lombok.Builder;
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import lombok.Data;
 
 import java.util.List;

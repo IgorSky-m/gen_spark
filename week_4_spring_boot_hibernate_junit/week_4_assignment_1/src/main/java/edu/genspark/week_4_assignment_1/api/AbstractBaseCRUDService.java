@@ -63,7 +63,7 @@ public abstract class AbstractBaseCRUDService<T extends IIdentifiable<ID>, ID> e
         } catch (NotFoundException e) {
             throw e;
         } catch (Exception e){
-        getLogger().error(getMessageSource().getMessage("error.crud.delete.list", null, LocaleContextHolder.getLocale()));
+        getLogger().error(getMessageSource().getMessage("error.crud.delete.one", null, LocaleContextHolder.getLocale()));
         throw new RepositoryException(e);
     }
     }
@@ -88,5 +88,17 @@ public abstract class AbstractBaseCRUDService<T extends IIdentifiable<ID>, ID> e
         getRepository().deleteAllById(ids);
 
         return founded;
+
+    }
+
+    @Transactional
+    @Override
+    public void deleteAll() {
+        try {
+            getRepository().deleteAll();
+        } catch (Exception e) {
+            getLogger().error(getMessageSource().getMessage("error.crud.delete.list", null, LocaleContextHolder.getLocale()));
+            throw new RepositoryException(e);
+        }
     }
 }

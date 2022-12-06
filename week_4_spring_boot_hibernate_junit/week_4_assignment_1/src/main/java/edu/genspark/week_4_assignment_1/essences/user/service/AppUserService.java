@@ -34,13 +34,6 @@ public class AppUserService extends AbstractBaseCRUDService<AppUser, UUID> {
         return savedUser;
     }
 
-
-    @Transactional
-    @Override
-    public void deleteAll() {
-        getRepository().deleteAll();
-    }
-
     @Override
     protected Logger getLogger() {
         return logger;
