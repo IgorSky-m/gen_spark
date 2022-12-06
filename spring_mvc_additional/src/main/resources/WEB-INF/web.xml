@@ -1,7 +1,0 @@
-<web-app>
-    <servlet>
-        <servlet-name>dispatcher</servlet-name>
-
-    </servlet>
-
-</web-app>
