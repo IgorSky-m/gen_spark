@@ -1,6 +1,8 @@
 package org.example.entities.rest.api_case;
 
 import org.example.entities.rest.api_case.api.IMyService;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -28,8 +30,8 @@ public class MyController {
     }
 
     @PostMapping
-    public MyEntity create(@RequestBody MyEntity entity) {
-        return service.create(entity);
+    public ResponseEntity<MyEntity> create(@RequestBody MyEntity entity) {
+        return new ResponseEntity<>(service.create(entity), HttpStatus.CREATED);
     }
 
     @PutMapping("/{id}")

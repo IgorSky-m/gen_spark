@@ -1,12 +1,13 @@
 package org.example.entities.rest.api_case;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import org.example.advice.ExceptionHandlerAdvice;
 import org.example.entities.rest.api_case.api.IMyService;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.Mockito;
+import org.mockito.*;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
@@ -14,13 +15,16 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.argThat;
+import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.when;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @SpringBootTest
 @ExtendWith(MockitoExtension.class)
@@ -31,7 +35,10 @@ public class MyControllerTest {
     private final UUID second = UUID.fromString("f195d613-b70d-45d3-a684-8f25c78c669f");
     private final UUID third = UUID.fromString("91220ce6-2c2d-46b1-84e3-2ae748bb6708");
 
+    private final Set<UUID> validUuids = Set.of(first, second, third);
 
+    @Autowired
+    private ObjectMapper mapper;
     private MockMvc mockMvc;
     @Mock
     private IMyService service;
@@ -41,7 +48,16 @@ public class MyControllerTest {
 
     @BeforeAll
     public void setupAll() {
-        mockMvc = MockMvcBuilders.standaloneSetup(controller).build();
+
+        mockMvc = MockMvcBuilders.standaloneSetup(controller)
+                .setControllerAdvice(new ExceptionHandlerAdvice())
+                .build();
+
+        setup();
+    }
+
+    @BeforeEach
+    public void setup() {
         when(service.findAll()).thenReturn(createAll());
 
         when(service.findById(first))
@@ -53,15 +69,16 @@ public class MyControllerTest {
         when(service.findById(third))
                 .thenReturn(createThird());
 
-        when(service.findById(null))
-        .thenThrow(new IllegalArgumentException("Entity not found"));
+        ArgumentMatcher<UUID> invalidIdMatcher = (id) -> !validUuids.contains(id);
 
-    }
+        when(service.findById(argThat(invalidIdMatcher)))
+                .thenThrow(new IllegalArgumentException("Entity not found"));
 
-    @BeforeEach
-    public void setup() {
+        when(service.create(any())).then(AdditionalAnswers.returnsFirstArg());
 
+        when(service.update(any(), any())).then(AdditionalAnswers.returnsSecondArg());
 
+        doNothing().when(service).delete(any());
     }
 
 
@@ -118,13 +135,63 @@ public class MyControllerTest {
         MyEntity thirdEntity = createThird();
 
         mockMvc.perform(
-                        MockMvcRequestBuilders.get("/my/" + thirdEntity).contentType(MediaType.APPLICATION_JSON))
+                        MockMvcRequestBuilders.get("/my/" + third).contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id", is(thirdEntity.getId().toString())))
                 .andExpect(jsonPath("$.name", is(thirdEntity.getName())))
                 .andExpect(jsonPath("$.description", is(thirdEntity.getDescription())));
+
+        mockMvc.perform(
+                        MockMvcRequestBuilders.get("/my/" + UUID.randomUUID()).contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isNoContent());
     }
 
+    @Test
+    @DisplayName("create one")
+    public void create() throws Exception{
+        MyEntity firstEntity = createFirst();
+
+        mockMvc.perform(
+                        MockMvcRequestBuilders.post("/my")
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .accept(MediaType.APPLICATION_JSON)
+                                .characterEncoding("UTF-8").content(this.mapper.writeValueAsBytes(firstEntity)))
+                .andExpect(status().isCreated())
+                .andExpect(jsonPath("$.id",  is(first.toString())))
+                .andExpect(content().string(this.mapper.writeValueAsString(firstEntity)));
+    }
+
+    @Test
+    @DisplayName("update one")
+    public void update() throws Exception{
+        MyEntity firstEntity = createFirst();
+        firstEntity.setName("Upd Name");
+        firstEntity.setDescription("Upd Description");
+
+
+        mockMvc.perform(
+                        MockMvcRequestBuilders.put("/my/"+ firstEntity.getId().toString())
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .accept(MediaType.APPLICATION_JSON)
+                                .characterEncoding("UTF-8").content(this.mapper.writeValueAsBytes(firstEntity)))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.id",  is(first.toString())))
+                .andExpect(jsonPath("$.name",  is("Upd Name")))
+                .andExpect(jsonPath("$.description",  is("Upd Description")))
+                .andExpect(content().string(this.mapper.writeValueAsString(firstEntity)));
+    }
+
+
+    @Test
+    @DisplayName("delete")
+    public void delete() throws Exception{
+
+
+        mockMvc.perform(
+                        MockMvcRequestBuilders.delete("/my/"+ first)
+                                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk());
+    }
 
     private List<MyEntity> createAll() {
         return List.of(createFirst(), createSecond(), createThird());
