@@ -14,8 +14,8 @@ import java.util.UUID;
 @Service
 public class MyService implements IMyService {
 
-    private final IMyEntityRepository repository;
 
+    private final IMyEntityRepository repository;
 
     public MyService(IMyEntityRepository repository) {
         this.repository = repository;

@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+
+
+
+    <springProperty scope="context" name="smtpHost" source="spring.mail.host" />
+    <springProperty scope="context" name="smtpPort" source="spring.mail.port" />
+    <springProperty scope="context" name="username" source="spring.mail.username" />
+    <springProperty scope="context" name="password" source="spring.mail.password" />
+
+    <appender name="EMAIL" class="ch.qos.logback.classic.net.SMTPAppender">
+        <smtpHost>${smtpHost}</smtpHost>
+        <smtpPort>${smtpPort}</smtpPort>
+<!--        <SSL>true</SSL>-->
+                <STARTTLS>true</STARTTLS>
+        <username>${username}</username>
+        <password>${password}</password>
+        <to>${username}</to>
+        <from>${username}</from>
+        <subject>Error From ERP: %logger{20} - %m</subject>
+
+        <layout class="ch.qos.logback.classic.html.HTMLLayout"/>
+        <cyclicBufferTracker class="ch.qos.logback.core.spi.CyclicBufferTracker">
+            <!-- only 5 log entries on email -->
+            <bufferSize>5</bufferSize>
+        </cyclicBufferTracker>
+    </appender>
+
+
+
+    <!-- dump status message on the console as they arrive -->
+    <statusListener class="ch.qos.logback.core.status.OnConsoleStatusListener" />
+
+    <include resource ="org/springframework/boot/logging/logback/defaults.xml" />
+    <property name="LOGS" value="./logs" />
+
+    <appender name="Console"
+              class="ch.qos.logback.core.ConsoleAppender">
+        <layout class="ch.qos.logback.classic.PatternLayout">
+            <Pattern>
+                %black(%d{ISO8601}) %highlight(%-5level) [%blue(%t)] %yellow(%C{1}): %msg%n%throwable
+            </Pattern>
+        </layout>
+    </appender>
+
+<!--    <appender name="EMAIL" class="ch.qos.logback.classic.net.SMTPAppender">-->
+<!--        <smtpHost>smtp.gmail.com</smtpHost>-->
+<!--        <smtpPort>587</smtpPort>-->
+<!--        <STARTTLS>true</STARTTLS>-->
+<!--        <asynchronousSending>false</asynchronousSending>-->
+<!--        <username>${logging.custom.smtp.username}</username>-->
+<!--        <password>${logging.custom.smtp.password}</password>-->
+<!--        &lt;!&ndash; one or more recipients are possible &ndash;&gt;-->
+<!--        <to>${logging.custom.smtp.recipients.SMTP-EMAIL-RECIPIENT-1}</to>-->
+<!--&lt;!&ndash;        <to>EMAIL-RECIPIENT-2</to>&ndash;&gt;-->
+<!--        <from>${logging.custom.smtp.from}</from>-->
+<!--        <subject>TEST: %logger{20} - %msg</subject>-->
+<!--        <layout class="ch.qos.logback.classic.html.HTMLLayout"/>-->
+<!--&lt;!&ndash;        <layout class="ch.qos.logback.classic.PatternLayout">&ndash;&gt;-->
+<!--&lt;!&ndash;            <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{35} - %msg%n</pattern>&ndash;&gt;-->
+<!--&lt;!&ndash;        </layout>&ndash;&gt;-->
+<!--        <cyclicBufferTracker class="ch.qos.logback.core.spi.CyclicBufferTracker">-->
+<!--            <bufferSize>10</bufferSize>-->
+<!--        </cyclicBufferTracker>-->
+<!--    </appender>-->
+
+    <appender name="RollingFile"
+              class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${LOGS}/spring-boot-logger.log</file>
+        <encoder
+                class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <Pattern>%d %p %C{1} [%t] %m%n</Pattern>
+        </encoder>
+
+        <rollingPolicy
+                class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <!-- rollover daily and when the file reaches 10 MegaBytes -->
+            <fileNamePattern>${LOGS}/archived/spring-boot-logger-%d{yyyy-MM-dd}.%i.log
+            </fileNamePattern>
+            <timeBasedFileNamingAndTriggeringPolicy
+                    class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                <maxFileSize>1MB</maxFileSize>
+            </timeBasedFileNamingAndTriggeringPolicy>
+        </rollingPolicy>
+    </appender>
+
+    <!-- LOG everything at INFO level -->
+    <root level="info">
+        <appender-ref ref="RollingFile" />
+        <appender-ref ref="Console" />
+        <appender-ref ref="EMAIL"/>
+    </root>
+
+<!--    &lt;!&ndash; LOG "org.example*" at TRACE level &ndash;&gt;-->
+<!--    <logger name="com.example" level="trace" additivity="false">-->
+<!--        <appender-ref ref="RollingFile" />-->
+<!--        <appender-ref ref="Console" />-->
+<!--        <appender-ref ref="EMAIL"/>-->
+<!--    </logger>-->
+
+
+
+</configuration>

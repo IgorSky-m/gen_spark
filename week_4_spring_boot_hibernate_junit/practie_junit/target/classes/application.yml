@@ -20,9 +20,27 @@ spring:
   h2:
     console:
       enabled: true
+  mail:
+    host: 'smtp.gmail.com'
+    port: 587
+    username: ${SMTP-USER}
+    password: ${SMTP-PASS}
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
 
 # logging props
 logging:
+  custom:
+    smtp:
+      username: ${SMTP-USER}
+      password: ${SMTP-PASS}
+      from: ${SMTP-USER}
+      recipients:
+        SMTP-EMAIL-RECIPIENT-1: ${SMTP-USER}
   level:
     root: INFO
     org.springframework.web: INFO
@@ -32,3 +50,4 @@ logging:
     console: '[%d{yyyy-MM-dd HH:mm:ss}] [%thread] [%-5level] %logger{36} - %msg%n'
     file: '%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{100} - %msg%n'
   file: logs/application-debug.log
+
