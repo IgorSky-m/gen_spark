@@ -95,7 +95,7 @@ public class MyControllerTest {
         MyEntity thirdEntity = createThird();
 
         mockMvc.perform(
-                MockMvcRequestBuilders.get("/my").contentType(MediaType.APPLICATION_JSON))
+                        MockMvcRequestBuilders.get("/my").contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$", hasSize(3)))
                 .andExpect(jsonPath("$[0].id", is(firstEntity.getId().toString())))
@@ -148,7 +148,7 @@ public class MyControllerTest {
 
     @Test
     @DisplayName("create one")
-    public void create() throws Exception{
+    public void create() throws Exception {
         MyEntity firstEntity = createFirst();
 
         mockMvc.perform(
@@ -157,38 +157,37 @@ public class MyControllerTest {
                                 .accept(MediaType.APPLICATION_JSON)
                                 .characterEncoding("UTF-8").content(this.mapper.writeValueAsBytes(firstEntity)))
                 .andExpect(status().isCreated())
-                .andExpect(jsonPath("$.id",  is(first.toString())))
+                .andExpect(jsonPath("$.id", is(first.toString())))
                 .andExpect(content().string(this.mapper.writeValueAsString(firstEntity)));
     }
 
     @Test
     @DisplayName("update one")
-    public void update() throws Exception{
+    public void update() throws Exception {
         MyEntity firstEntity = createFirst();
         firstEntity.setName("Upd Name");
         firstEntity.setDescription("Upd Description");
 
 
         mockMvc.perform(
-                        MockMvcRequestBuilders.put("/my/"+ firstEntity.getId().toString())
+                        MockMvcRequestBuilders.put("/my/" + firstEntity.getId().toString())
                                 .contentType(MediaType.APPLICATION_JSON)
                                 .accept(MediaType.APPLICATION_JSON)
                                 .characterEncoding("UTF-8").content(this.mapper.writeValueAsBytes(firstEntity)))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.id",  is(first.toString())))
-                .andExpect(jsonPath("$.name",  is("Upd Name")))
-                .andExpect(jsonPath("$.description",  is("Upd Description")))
+                .andExpect(jsonPath("$.id", is(first.toString())))
+                .andExpect(jsonPath("$.name", is("Upd Name")))
+                .andExpect(jsonPath("$.description", is("Upd Description")))
                 .andExpect(content().string(this.mapper.writeValueAsString(firstEntity)));
     }
 
-
     @Test
     @DisplayName("delete")
-    public void delete() throws Exception{
+    public void delete() throws Exception {
 
 
         mockMvc.perform(
-                        MockMvcRequestBuilders.delete("/my/"+ first)
+                        MockMvcRequestBuilders.delete("/my/" + first)
                                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk());
     }
