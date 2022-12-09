@@ -36,11 +36,14 @@ spring:
 logging:
   custom:
     smtp:
-      username: ${SMTP-USER}
-      password: ${SMTP-PASS}
-      from: ${SMTP-USER}
+      host: ${spring.mail.username}
+      port: ${spring.mail.port}
+      username: ${spring.mail.username}
+      password: ${spring.mail.password}
+      from: ${spring.mail.username}
+      starttls: true
       recipients:
-        SMTP-EMAIL-RECIPIENT-1: ${SMTP-USER}
+        SMTP-EMAIL-RECIPIENT-1: ${spring.mail.username}
   level:
     root: INFO
     org.springframework.web: INFO

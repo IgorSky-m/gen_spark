@@ -41,7 +41,7 @@ logging:
       username: ${spring.mail.username}
       password: ${spring.mail.password}
       from: ${spring.mail.username}
-      starttls: true
+      starttls: 'true'
       recipients:
         SMTP-EMAIL-RECIPIENT-1: ${spring.mail.username}
   level:
